@@ -82,7 +82,8 @@ pub fn part_two(input: &str) -> Option<u32> {
     let mut board: Board = input.lines().map(|line| line.chars().collect()).collect();
     let start = find_start(&board);
     let path = get_path(&board, start);
-    let res = path.iter()
+    let res = path
+        .iter()
         .filter_map(|pos| {
             board[pos.0][pos.1] = '#';
             let res = if loopable(&board, start) {
@@ -98,7 +99,9 @@ pub fn part_two(input: &str) -> Option<u32> {
 }
 
 pub fn part_one(input: &str) -> Option<u32> {
-    None
+    let board: Board = input.lines().map(|line| line.chars().collect()).collect();
+    let start = find_start(&board);
+    Some((get_path(&board, start).len() + 1) as u32)
 }
 
 #[cfg(test)]
