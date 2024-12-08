@@ -11,7 +11,10 @@ type CoordMap = HashMap<char, CoordSet>;
 const DIM: i64 = 50;
 
 fn extend(a: (i64, i64), b: (i64, i64)) -> (i64, i64) {
-    (( 2 * b.0 ).overflowing_sub(a.0).0, (2 * b.1).overflowing_sub( a.1).0)
+    (
+        (2 * b.0).overflowing_sub(a.0).0,
+        (2 * b.1).overflowing_sub(a.1).0,
+    )
 }
 
 fn valid(a: (i64, i64)) -> bool {
@@ -53,18 +56,17 @@ pub fn part_one(input: &str) -> Option<u32> {
         .iter()
         .map(|(_c, coords)| find_antinodes(&coords))
         .for_each(|res| result.extend(&res));
-    Some( result.len() as u32)
+    Some(result.len() as u32)
 }
 
 fn normalize(mut a: (i64, i64)) -> (i64, i64) {
     for i in 2..a.0 {
         if a.0 % i == 0 && a.1 % i == 0 {
-            a = (a.0 / i , a.1 / i);
+            a = (a.0 / i, a.1 / i);
         }
     }
     a
 }
-
 
 fn subtract(a: &(i64, i64), b: &(i64, i64)) -> (i64, i64) {
     (a.0 - b.0, a.1 - b.1)
@@ -77,7 +79,6 @@ fn add(a: &(i64, i64), b: &(i64, i64)) -> (i64, i64) {
 fn multiply(a: &(i64, i64), b: i64) -> (i64, i64) {
     (a.0 * b, a.1 * b)
 }
-
 
 fn find_antinodes_two(coords: &CoordSet) -> CoordSet {
     let mut result: CoordSet = HashSet::new();
@@ -118,7 +119,7 @@ pub fn part_two(input: &str) -> Option<u32> {
         .iter()
         .map(|(_c, coords)| find_antinodes_two(&coords))
         .for_each(|res| result.extend(&res));
-    Some( result.len() as u32)
+    Some(result.len() as u32)
 }
 
 #[cfg(test)]
